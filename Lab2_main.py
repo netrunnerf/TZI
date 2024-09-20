@@ -11,33 +11,32 @@ class CryptoApp:
     def __init__(self, master):
         self.master = master
         master.title("Криптографічна програма")
-        master.configure(bg="#f0f0f0")
 
         self.action = tk.StringVar(value="encrypt")
         self.algorithm = tk.StringVar(value="AES")
 
-        title_font = ("Helvetica", 16, "bold")
-        label_font = ("Helvetica", 12)
-        button_font = ("Helvetica", 10)
+        # Вибір дії
+        tk.Label(master, text="Виберіть дію:").pack()
+        tk.Radiobutton(master, text="Зашифрувати", variable=self.action, value="encrypt").pack()
+        tk.Radiobutton(master, text="Розшифрувати", variable=self.action, value="decrypt").pack()
 
-        tk.Label(master, text="Виберіть дію:", font=title_font, bg="#f0f0f0").pack(pady=10)
-        tk.Radiobutton(master, text="Зашифрувати", variable=self.action, value="encrypt", font=label_font, bg="#f0f0f0").pack(anchor="w", padx=20)
-        tk.Radiobutton(master, text="Розшифрувати", variable=self.action, value="decrypt", font=label_font, bg="#f0f0f0").pack(anchor="w", padx=20)
+        # Вибір алгоритму
+        tk.Label(master, text="Виберіть алгоритм:").pack()
+        tk.Radiobutton(master, text="AES", variable=self.algorithm, value="AES").pack()
+        tk.Radiobutton(master, text="RSA", variable=self.algorithm, value="RSA").pack()
+        tk.Radiobutton(master, text="SHA256 (хешування)", variable=self.algorithm, value="SHA256").pack()
 
-        tk.Label(master, text="Виберіть алгоритм:", font=title_font, bg="#f0f0f0").pack(pady=10)
-        tk.Radiobutton(master, text="AES", variable=self.algorithm, value="AES", font=label_font, bg="#f0f0f0").pack(anchor="w", padx=20)
-        tk.Radiobutton(master, text="RSA", variable=self.algorithm, value="RSA", font=label_font, bg="#f0f0f0").pack(anchor="w", padx=20)
-        tk.Radiobutton(master, text="SHA256 (хешування)", variable=self.algorithm, value="SHA256", font=label_font, bg="#f0f0f0").pack(anchor="w", padx=20)
+        # Вибір файлів
+        tk.Button(master, text="Вибрати вхідний файл", command=self.select_input_file).pack()
+        self.input_file_label = tk.Label(master, text="Вхідний файл не вибрано")
+        self.input_file_label.pack()
 
-        tk.Button(master, text="Вибрати вхідний файл", command=self.select_input_file, font=button_font).pack(pady=5)
-        self.input_file_label = tk.Label(master, text="Вхідний файл не вибрано", font=label_font, bg="#f0f0f0")
-        self.input_file_label.pack(pady=5)
+        tk.Button(master, text="Вибрати вихідний файл", command=self.select_output_file).pack()
+        self.output_file_label = tk.Label(master, text="Вихідний файл не вибрано")
+        self.output_file_label.pack()
 
-        tk.Button(master, text="Вибрати вихідний файл", command=self.select_output_file, font=button_font).pack(pady=5)
-        self.output_file_label = tk.Label(master, text="Вихідний файл не вибрано", font=label_font, bg="#f0f0f0")
-        self.output_file_label.pack(pady=5)
-
-        tk.Button(master, text="Виконати", command=self.execute, font=button_font, bg="#4CAF50", fg="white").pack(pady=20)
+        # Кнопка виконання
+        tk.Button(master, text="Виконати", command=self.execute).pack()
 
         self.input_file = None
         self.output_file = None
